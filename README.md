@@ -2,9 +2,9 @@
 
 This project outlines the installation of a Linux server and prepare it to host a web applications, install and configure a database server, and deployment.
 
-*  IP Address: 34.201.54.34
+*  IP Address: 18.211.236.139
 *  SSH Port: 2200
-*  URL:  http://34.201.54.34.xip.io
+*  URL:  http://rightofzero.com
 
 ## Resources
 
@@ -14,9 +14,6 @@ This project outlines the installation of a Linux server and prepare it to host 
 * [Flask](http://flask.pocoo.org/docs/1.0/)
 * [SQLAlchemy - PostgreSQL](http://docs.sqlalchemy.org/en/latest/dialects/postgresql.html)
 * [Google Oauth 2 Authentication](https://developers.google.com/identity/protocols/OAuth2)
-* Facebook Oauth Authentication
-	**NOTE:**  Facebook now enforce HTTPS (see [here](https://developers.facebook.com/blog/post/2018/06/08/enforce-https-facebook-login/))
-
 
 ## Setup new Ubuntu Linux server instance on Amazon Lightsail
 1.  Go to [Ligthsail](https://aws.amazon.com/lightsail/)
@@ -26,7 +23,7 @@ This project outlines the installation of a Linux server and prepare it to host 
 5.  Give your instance a hostname
 6.  Wait for it to start up
 7.  It's running on IPls `t` with the name `linux-catalog`.
-8.  Obtain DNS name using the [xip.io](http://xip.io/) service (for OAuth set up). I will use `34.201.54.34.xip.io`. ([set up DNS Zone in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en/articles/lightsail-how-to-create-dns-entry))
+8.  Obtain DNS name using the [xip.io](http://xip.io/) service (for OAuth set up). I will use `http://rightofzero.com`. ([set up DNS Zone in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en/articles/lightsail-how-to-create-dns-entry))
 9. Connect using SSH button and update all currently installed packages.
 	Type `sudo apt-get update`
 	Type `sudo apt-get upgrade`
@@ -83,7 +80,7 @@ tab to update Firewall settings:
 	Add Custom UDP 123
 	Save updates.
 15. From local machine, verify you can SSH into server using port 2200:
-	Type ` ssh grader@34.201.54.34 -p 2200 -i ~/.ssh/linuxProject`
+	Type ` ssh grader@18.211.236.139 -p 2200 -i ~/.ssh/linuxProject`
 	Enter passphrase for key
 	Successfully logged in as `grader` via SSH
 16.	In Lightsail (on you server), go to the Networking
@@ -158,8 +155,8 @@ tab to edit Firewall settings:
 2. Edit file to contain the following:
 	```
 	<VirtualHost *:80>
-		ServerName 34.201.54.34.xip.io
-		ServerAdmin admin@34.201.54.34.xip.io.com
+		ServerName rightofzero.com
+		ServerAdmin admin@rightofzero.com
 		WSGIScriptAlias / /var/www/CatalogApp/catalogapp.wsgi
 		<Directory /var/www/CatalogApp/CatalogApp/>
 			Order allow,deny
@@ -187,12 +184,14 @@ tab to edit Firewall settings:
 		logging.basicConfig(stream=sys.stderr)
 		sys.path.insert(0,"/var/www/CatalogApp/")
 		from CatalogApp import app as application
+		application.secret_key = 'super secret key'
 		```
+		**NOTE:** Obtain secret key (check [here](https://gist.github.com/geoffalday/2021517))
 5. Disable default:
 	Type `sudo a2dissite 000-default.conf`
 6. Add ip and host
 	Type `sudo nano /etc/hosts`
-	Add `34.201.54.34 34.201.54.34.xip.io`
+	Add `18.211.236.139 rightofzero.com`
 7. Enable virtual host:
 	Type `sudo a2ensite CatalogApp`
 8. Restart apache
@@ -200,7 +199,7 @@ tab to edit Firewall settings:
 	
 ## Install and Set-Up Database
 
-1. Type `apt-get install postgresql` to install
+1. Type `sudo apt-get install postgresql` to install
 2. Type `sudo -u postgres psql postgres` to access postgreSQL
 3. Type `\password postgres` to set the password
 4. Type `CREATE DATABASE catalog;` to create the database
@@ -242,10 +241,10 @@ tab to edit Firewall settings:
         notokenfile.close()```
         **NOTE:** Had to give file permissions (see [here](https://stackoverflow.com/questions/29331872/ioerror-errno-13-permission-denied))
  4. Add the following parameters to the book and category tables foreign keys:
- 	`onupdate=”CASCADE”, ondelete=”CASCADE”`
+ 	`onupdate='CASCADE', ondelete='CASCADE'`
  5. Changed connection to database from sql to postgres in database_setup.py, initial_data.py and __init__.py:
  	From `sqlite:///categories_books_users.db`
  	To `postgres://catalog:<password here>@localhost/catalog`
  6. Download and update Google API JSON file (client_secrets.json)
- 7. Update Facebook API site URL to `http://34.201.54.34.xip.io`
- 	**NOTE:** Facebook now enforce HTTPS (see here)
+ 7. Removed Facebook Oauth Authentication
+	**NOTE:**  Facebook now enforce HTTPS (see [here](https://developers.facebook.com/blog/post/2018/06/08/enforce-https-facebook-login/))
