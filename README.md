@@ -2,9 +2,9 @@
 
 This project outlines the installation of a Linux server and prepare it to host a web applications, install and configure a database server, and deployment.
 
-*  IP Address: 18.211.236.139
+*  IP Address: <IP Address>
 *  SSH Port: 2200
-*  URL:  http://rightofzero.com
+*  URL:  <URL>
 
 ## Resources
 
@@ -23,7 +23,7 @@ This project outlines the installation of a Linux server and prepare it to host 
 5.  Give your instance a hostname
 6.  Wait for it to start up
 7.  It's running on IPls `t` with the name `linux-catalog`.
-8.  Obtain DNS name using the [xip.io](http://xip.io/) service (for OAuth set up). I will use `http://rightofzero.com`. ([set up DNS Zone in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en/articles/lightsail-how-to-create-dns-entry))
+8.  Obtain DNS name using the [xip.io](http://xip.io/) service (for OAuth set up). I will use `<URL>`. ([set up DNS Zone in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en/articles/lightsail-how-to-create-dns-entry))
 9. Connect using SSH button and update all currently installed packages.
 	Type `sudo apt-get update`
 	Type `sudo apt-get upgrade`
@@ -80,7 +80,7 @@ tab to update Firewall settings:
 	Add Custom UDP 123
 	Save updates.
 15. From local machine, verify you can SSH into server using port 2200:
-	Type ` ssh grader@18.211.236.139 -p 2200 -i ~/.ssh/linuxProject`
+	Type ` ssh grader@<IP Address> -p 2200 -i ~/.ssh/linuxProject`
 	Enter passphrase for key
 	Successfully logged in as `grader` via SSH
 16.	In Lightsail (on you server), go to the Networking
@@ -155,8 +155,8 @@ tab to edit Firewall settings:
 2. Edit file to contain the following:
 	```
 	<VirtualHost *:80>
-		ServerName rightofzero.com
-		ServerAdmin admin@rightofzero.com
+		ServerName <your server name>
+		ServerAdmin admin@<your server name>.com
 		WSGIScriptAlias / /var/www/CatalogApp/catalogapp.wsgi
 		<Directory /var/www/CatalogApp/CatalogApp/>
 			Order allow,deny
@@ -191,7 +191,7 @@ tab to edit Firewall settings:
 	Type `sudo a2dissite 000-default.conf`
 6. Add ip and host
 	Type `sudo nano /etc/hosts`
-	Add `18.211.236.139 rightofzero.com`
+	Add `<IP Address> <your server name>`
 7. Enable virtual host:
 	Type `sudo a2ensite CatalogApp`
 8. Restart apache
