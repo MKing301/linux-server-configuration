@@ -113,14 +113,14 @@ tab to edit Firewall settings:
 ### Set up application structure
 
 1. Create app
-	Type `cd /var/www`
-	Type `sudo mkdir CatalogApp`
-	Type `cd CatalogApp`
-	Clone repository from Catalog Project (completed earlier in course)
-		Type `sudo git clone https://github.com/MKing301/catalog.git CatalogApp`
-	Rename `catalog_app.py` to `__init__.py`
-		Type `cd CatalogApp`
-		Type `sudo mv catalog_app.py __init__.py`
+	a.  Type `cd /var/www`
+	b.  Type `sudo mkdir CatalogApp`
+	c.  Type `cd CatalogApp`
+	d.  Clone repository from Catalog Project (completed earlier in course)
+		i.  Type `sudo git clone https://github.com/MKing301/catalog.git CatalogApp`
+	f.  Rename `catalog_app.py` to `__init__.py`
+		i.  Type `cd CatalogApp`
+		ii.  Type `sudo mv catalog_app.py __init__.py`
 2. Make sure that your .git directory is not publicly accessible via a browser (see [here](https://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible))
 	 
 ### Install Flask and Set-Up Virtual Environment
