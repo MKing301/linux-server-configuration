@@ -219,23 +219,23 @@ tab to edit Firewall settings:
 
 1. Remove Vagrantfile and categories_books_users.db files
 2. Update the following variables:
-	From `CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']`
-	To `CLIENT_ID = json.loads(open('/var/www/CatalogApp/CatalogApp/client_secrets.json', 'r').read())['web']['client_id']`
-	From `app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']`
-	To `app_id = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_id']`
-	From `app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']`
-	To `app_secret = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_secret']`
-	From ` oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')`
-	To ` oauth_flow = flow_from_clientsecrets('/var/www/CatalogApp/CatalogApp/client_secrets.json', scope='')`
+*  From `CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']`
+To `CLIENT_ID = json.loads(open('/var/www/CatalogApp/CatalogApp/client_secrets.json', 'r').read())['web']['client_id']`
+*  From `app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']`
+To `app_id = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_id']`
+*  From `app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']`
+To `app_secret = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_secret']`
+*  From ` oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')`
+To ` oauth_flow = flow_from_clientsecrets('/var/www/CatalogApp/CatalogApp/client_secrets.json', scope='')`
 3. Change 2 print statements:
-	From `print ('No User ID found.')`
-	To ```
+* From `print ('No User ID found.')`
+To```
 		nouseridfile = open("/var/www/CatalogApp/CatalogApp/nouseridfile.txt", "a")
         nouseridfile.write('No User ID found')
         nouseridfile.close()```
         **NOTE:** Had to give file permissions (see [here](https://stackoverflow.com/questions/29331872/ioerror-errno-13-permission-denied))
-    From `print 'Access Token is None'`
-    To ```
+ * From `print 'Access Token is None'`
+ To ```
     	notokenfile = open("/var/www/CatalogApp/CatalogApp/notokenfile.txt", "a")
         notokenfile.write('Access Token is None')
         notokenfile.close()```
