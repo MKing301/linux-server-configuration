@@ -208,7 +208,7 @@ This project outlines the installation of a Linux server and prepare it to host 
 8. Type `\q` then `ENTER` to exit postgreSQL
 9. Reload postgresql by type `sudo /etc/init.d/postgresql reload`
 10. Enter virtual environment to load table and initial data for the database:
-	1. Type `cd /var/www/CatalogApp/CatalogApp`
+    1. Type `cd /var/www/CatalogApp/CatalogApp`
 	2. Type `source venv/bin/activate`
 	3. Type `sudo python database_setup.py`
 	4. Type `sudo python initial_data.py`
@@ -217,32 +217,32 @@ This project outlines the installation of a Linux server and prepare it to host 
 
 1. Remove Vagrantfile and categories_books_users.db files
 2. Update the following variables:
-  1. From `CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']`
-  2. To `CLIENT_ID = json.loads(open('/var/www/CatalogApp/CatalogApp/client_secrets.json', 'r').read())['web']['client_id']`
-  3. From `app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']`
-  4. To `app_id = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_id']`
-  5. From `app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']`
-  6. To `app_secret = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_secret']`
-  7. From ` oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')`
-  8. To ` oauth_flow = flow_from_clientsecrets('/var/www/CatalogApp/CatalogApp/client_secrets.json', scope='')`
+    1. From `CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']`
+    2. To `CLIENT_ID = json.loads(open('/var/www/CatalogApp/CatalogApp/client_secrets.json', 'r').read())['web']['client_id']`
+    3. From `app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']`
+    4. To `app_id = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_id']`
+    5. From `app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']`
+    6. To `app_secret = json.loads(open('/var/www/CatalogApp/CatalogApp/fb_client_secrets.json', 'r').read())['web']['app_secret']`
+    7. From ` oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')`
+    8. To ` oauth_flow = flow_from_clientsecrets('/var/www/CatalogApp/CatalogApp/client_secrets.json', scope='')`
 3. Change 2 print statements:
-  1. From `print ('No User ID found.')`
-  2. To```
+    1. From `print ('No User ID found.')`
+    2. To```
 		nouseridfile = open("/var/www/CatalogApp/CatalogApp/nouseridfile.txt", "a")
         nouseridfile.write('No User ID found')
         nouseridfile.close()```
         **NOTE:** Had to give file permissions (see [here](https://stackoverflow.com/questions/29331872/ioerror-errno-13-permission-denied))
-  3. From `print 'Access Token is None'`
-  4. To ```
+    3. From `print 'Access Token is None'`
+    4. To ```
     	notokenfile = open("/var/www/CatalogApp/CatalogApp/notokenfile.txt", "a")
         notokenfile.write('Access Token is None')
         notokenfile.close()```
         **NOTE:** Had to give file permissions (see [here](https://stackoverflow.com/questions/29331872/ioerror-errno-13-permission-denied))
  4. Add the following parameters to the book and category tables foreign keys:
-  * `onupdate='CASCADE', ondelete='CASCADE'`
+    * `onupdate='CASCADE', ondelete='CASCADE'`
  5. Changed connection to database from sql to postgres in database_setup.py, initial_data.py and __init__.py:
-  1. From `sqlite:///categories_books_users.db`
-  2. To `postgres://catalog:<password here>@localhost/catalog`
+    1. From `sqlite:///categories_books_users.db`
+    2. To `postgres://catalog:<password here>@localhost/catalog`
  6. Download and update Google API JSON file (client_secrets.json)
  7. Removed Facebook Oauth Authentication
 	**NOTE:**  Facebook now enforce HTTPS (see [here](https://developers.facebook.com/blog/post/2018/06/08/enforce-https-facebook-login/))
